@@ -19,7 +19,7 @@ export function _enterVeh(Vehicle){
    _tank = 1;
     
     _test = alt.setInterval(() =>{
-      _speed = Math.round(native.getEntitySpeed(Vehicle.scriptID));
+      _speed = Math.round(native.getEntitySpeed(Vehicle.scriptID)*3.6);
     }, 100);
   
    _engine = alt.everyTick(() =>{
