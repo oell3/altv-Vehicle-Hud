@@ -2,7 +2,7 @@ import * as native from 'natives';
 import * as alt from 'alt-client';
 
 let _Tank;
-var _speedTick;
+let _speedTick; //var is outdated
 let _test;
 let _speed;
 let _tank;
