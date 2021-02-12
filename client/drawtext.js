@@ -2,32 +2,34 @@ import * as native from 'natives';
 import * as alt from 'alt-client';
 
 let _Tank;
-var _speedTick;
+let _speedTick; //var is outdated
 let _test;
 let _speed;
 let _tank;
 let _engine;
 
-export function _leave(){
+
+alt.on('enteredVehicle', _enterVeh)
+alt.on('leftVehicle', _leave);
+
+function _leave(){
     alt.clearEveryTick(_Tank);
     alt.clearInterval(_test);
     alt.clearEveryTick(_speedTick);
-  }
+}
+function _enterVeh(Vehicle) {
+    _tank = 1;
 
-
-export function _enterVeh(Vehicle){
-   _tank = 1;
-    
     _test = alt.setInterval(() =>{
       _speed = Math.round(native.getEntitySpeed(Vehicle.scriptID)*3.6);
     }, 100);
-  
-   _engine = alt.everyTick(() =>{
-  
+
+    _engine = alt.everyTick(() =>{
+
         if(_tank <= 0){
-          
-            native.setVehicleEngineOn(Vehicle.scriptID, false, false, false);   
-             
+
+            native.setVehicleEngineOn(Vehicle.scriptID, false, false, false);
+
         }
     });
     _Tank = alt.setInterval(()=>{
@@ -39,9 +41,9 @@ export function _enterVeh(Vehicle){
       drawText2d(_speed + ' kmh' , 0.85, 0.85, 1, 4, 255, 255, 255, 255);
       drawText2d('Tank:' + _tank + ' %', 0.85, 0.9, 1, 4, 255, 255, 255, 255);
     });
-  }
+    }
 
-export function drawText2d(
+    function drawText2d(
     msg,
     x,
     y,
@@ -55,7 +57,7 @@ export function drawText2d(
     useDropShadow = true,
     layer = 0,
     align = 0
-) {
+    ) {
     let hex = msg.match('{.*}');
     if (hex) {
         const rgb = hexToRgb(hex[0].replace('{', '').replace('}', ''));
